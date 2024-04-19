@@ -26,25 +26,33 @@ try:
     pump_d.grid(row=2, column=1, padx=5, pady=5)
 
     def update_status():
+        # Continuously update the status labels based on sensor readings
         while True:
-          data = ser.readline().decode().strip()
-          moisture_level = int(data)
-          if moisture_level < 500:
+            # Read data from the serial connection
+            data = ser.readline().decode().strip()
+            moisture_level = int(data)
+
+            # Check the moisture level and update labels accordingly
+            if moisture_level < 500:
                 status_d.config(text="Wet")
                 # Call a function to control the water pump
                 # Example: control_pump(True) to turn on the pump
                 pump_d.config(text="OFF")  # Update pump status label
-          else:
+            else:
                 status_d.config(text="Dry")
                 # Call a function to control the water pump
                 # Example: control_pump(False) to turn off the pump
                 pump_d.config(text="ON")  # Update pump status label
-          root.update()
-        
+
+            # Update the GUI to reflect changes
+            root.update()
 
     # Start updating the status labels and sensor reading after GUI initialization
     update_status()
+
+    # Start the tkinter main loop
     root.mainloop()
 
 except Exception as e:
+    # Print any errors that occur during execution
     print("Error:", e)
